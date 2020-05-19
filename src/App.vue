@@ -47,7 +47,7 @@
 		</v-app-bar>
 
 		<v-content>
-			<h1>Hello</h1>
+			<router-view></router-view>
 		</v-content>
 	</v-app>
 </template>
