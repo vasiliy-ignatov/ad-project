@@ -1,13 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
 import vuetify from './plugins/vuetify' // path to vuetify export
-import VueRouter from 'vue-router'
-
-Vue.use(VueRouter)
+import router from './router'
 
 
 new Vue({
-	vuetify,
 	el: '#app',
+	router,
+	vuetify,
 	render: h => h(App)
 })
