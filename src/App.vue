@@ -32,7 +32,7 @@
 
 			<v-spacer></v-spacer>
 
-			<v-toolbar-items class="d-none d-md-flex">
+			<v-toolbar-items class="d-none d-md-block">
 				<v-btn
 					color="deep-purple accent-4"
 					elevation="0"
@@ -53,22 +53,17 @@
 </template>
 
 <script>
-import { mdiLock } from '@mdi/js'
-import { mdiFace } from '@mdi/js'
-import { mdiBookmarkOutline } from '@mdi/js'
-import { mdiFilePlus } from '@mdi/js'
-import { mdiFormatListBulleted } from '@mdi/js'
 
 export default {
 	data() {
 		return {
 			drawer: false,
 			links: [
-				{ title: 'Login', icon: mdiLock, url: '/login' },
-				{ title: 'Registration', icon: mdiFace, url: '/registration' },
-				{ title: 'Orders', icon: mdiBookmarkOutline, url: '/orders' },
-				{ title: 'New ad', icon: mdiFilePlus, url: '/new' },
-				{ title: 'My ads', icon: mdiFormatListBulleted, url: '/list' }
+				{ title: 'Login', icon: 'lock', url: '/login' },
+				{ title: 'Registration', icon: 'face', url: '/registration' },
+				{ title: 'Orders', icon: 'mdi-clipboard-outline', url: '/orders' },
+				{ title: 'New ad', icon: 'note_add', url: '/new' },
+				{ title: 'My ads', icon: 'list', url: '/list' }
 			],
 		}
 	}
