@@ -2,60 +2,58 @@
 	<v-container>
 		<v-layout row>
 			<v-flex xs12>
-				<v-app>
-					<v-content>
-						<v-container
-							class="fill-height"
-							fluid
+				<v-content>
+					<v-container
+						class="fill-height"
+						fluid
+					>
+						<v-row
+						align="center"
+						justify="center"
 						>
-							<v-row
-							align="center"
-							justify="center"
+							<v-col
+								cols="12"
+								sm="10"
+								md="6"
 							>
-								<v-col
-									cols="12"
-									sm="10"
-									md="6"
+								<v-card class="elevation-12">
+								<v-toolbar
+									color="deep-purple accent-4"
+									dark
+									flat
 								>
-									<v-card class="elevation-12">
-									<v-toolbar
-										color="deep-purple accent-4"
-										dark
-										flat
-									>
-										<v-toolbar-title>Login form</v-toolbar-title>
-									</v-toolbar>
-									<v-card-text>
-										<v-form v-model="valid" validation="lazy" ref="form">
-											<v-text-field
-												label="Email"
-												name="email"
-												prepend-icon="person"
-												type="email"
-												v-model="email"
-												:rules="emailRules"
-											></v-text-field>
+									<v-toolbar-title>Login form</v-toolbar-title>
+								</v-toolbar>
+								<v-card-text>
+									<v-form v-model="valid" validation="lazy" ref="form">
+										<v-text-field
+											label="Email"
+											name="email"
+											prepend-icon="person"
+											type="email"
+											v-model="email"
+											:rules="emailRules"
+										></v-text-field>
 
-											<v-text-field
-												label="Password"
-												name="password"
-												prepend-icon="lock"
-												type="password"
-												v-model="password"
-												:rules="passwordRules"
-											></v-text-field>
-										</v-form>
-									</v-card-text>
-									<v-card-actions>
-										<v-spacer></v-spacer>
-										<v-btn color="deep-purple accent-4 white--text" @click="onSubmit" :disabled="!valid">Login</v-btn>
-									</v-card-actions>
-									</v-card>
-								</v-col>
-							</v-row>
-						</v-container>
-					</v-content>
-				</v-app>
+										<v-text-field
+											label="Password"
+											name="password"
+											prepend-icon="lock"
+											type="password"
+											v-model="password"
+											:rules="passwordRules"
+										></v-text-field>
+									</v-form>
+								</v-card-text>
+								<v-card-actions>
+									<v-spacer></v-spacer>
+									<v-btn color="deep-purple accent-4 white--text" @click="onSubmit" :disabled="!valid">Login</v-btn>
+								</v-card-actions>
+								</v-card>
+							</v-col>
+						</v-row>
+					</v-container>
+				</v-content>
 			</v-flex>
 		</v-layout>
 	</v-container>

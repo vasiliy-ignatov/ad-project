@@ -1,16 +1,16 @@
 <template>
 	<v-container>
 		<v-layout row>
-			<v-flex xs12>
-				<v-app>
+			<v-row>
+				<v-flex xs12>
 					<v-content>
 						<v-container
 							class="fill-height"
 							fluid
 						>
 							<v-row
-							align="center"
-							justify="center"
+								align="center"
+								justify="center"
 							>
 								<v-col
 									cols="12"
@@ -64,8 +64,8 @@
 							</v-row>
 						</v-container>
 					</v-content>
-				</v-app>
-			</v-flex>
+				</v-flex>
+			</v-row>
 		</v-layout>
 	</v-container>
 </template>
