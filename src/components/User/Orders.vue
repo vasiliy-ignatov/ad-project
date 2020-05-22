@@ -1,6 +1,9 @@
 <template>
 	<v-container>
-		<v-layout class="d-flex justify-center" row center>
+		<v-row
+			align="center"
+			justify="center"
+		>
 			<v-col cols="12" sm=6>
 				<h1 class="text--secondary mb-3">Orders</h1>
 
@@ -45,7 +48,7 @@
 					</v-list-item-group>
 				</v-list>
 			</v-col>
-		</v-layout>
+		</v-row>
 	</v-container>
 </template>
 

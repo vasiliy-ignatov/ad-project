@@ -1,29 +1,25 @@
 <template>
 	<div>
 		<v-container fluid>
-			<v-layout row>
-				<v-flex xs12>
-					<v-carousel
-						cycle
-						height="400"
-						hide-delimiter-background
-						show-arrows-on-hover
-					>
-						<v-carousel-item
-							v-for="slide in ads"
-							:key="slide.id"
-							:src="slide.imageSrc"
-						>
+			<v-carousel
+				cycle
+				height="400"
+				hide-delimiter-background
+				show-arrows-on-hover
+			>
+				<v-carousel-item
+					v-for="slide in ads"
+					:key="slide.id"
+					:src="slide.imageSrc"
+				>
 
-							<div class="car-link">
-								<v-btn class="deep-purple accent-4 white--text" :to="'/ad/' + slide.id">
-									{{ slide.title }} Slide
-								</v-btn>
-							</div>
-						</v-carousel-item>
-					</v-carousel>
-				</v-flex>
-			</v-layout>
+					<div class="car-link">
+						<v-btn class="deep-purple accent-4 white--text" :to="'/ad/' + slide.id">
+							{{ slide.title }} Slide
+						</v-btn>
+					</div>
+				</v-carousel-item>
+			</v-carousel>
 		</v-container>
 		<v-container>
 			<v-layout row>
