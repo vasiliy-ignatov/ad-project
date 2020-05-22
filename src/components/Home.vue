@@ -8,7 +8,7 @@
 				show-arrows-on-hover
 			>
 				<v-carousel-item
-					v-for="slide in ads"
+					v-for="slide in promoAds"
 					:key="slide.id"
 					:src="slide.imageSrc"
 				>
@@ -59,33 +59,14 @@
 
 <script>
 export default {
-	data() {
-		return {
-			ads: [
-				{
-					title: 'First',
-					description: 'First desc',
-					promo: false,
-					imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
-					id: '123'
-				},
-				{
-					title: 'Second',
-					description: 'Second desc',
-					promo: true,
-					imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
-					id: '1234'
-				},
-				{
-					title: 'Third',
-					description: 'Third desc',
-					promo: true,
-					imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
-					id: '12345'
-				}
-			]
+	computed: {
+		promoAds() {
+			return this.$store.getters.promoAds
+		},
+		ads() {
+			return this.$store.getters.ads
 		}
-	},
+	}
 }
 </script>
 

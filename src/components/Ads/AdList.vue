@@ -13,7 +13,7 @@
 				<v-card
 					class="mb-5 pl-3 pr-3"
 					:elevation="10"
-					v-for="ad in ads"
+					v-for="ad in myAds"
 					:key="ad.id"
 				>
 					<v-row>
@@ -44,19 +44,11 @@
 
 <script>
 export default {
-	data() {
-		return {
-			ads: [
-				{
-					title: 'First',
-					description: 'First desc',
-					promo: false,
-					imageSrc: 'https://picsum.photos/510/300?random',
-					id: '123'
-				}
-			]
+	computed: {
+		myAds() {
+			return this.$store.getters.myAds
 		}
-	},
+	}
 }
 </script>
 
