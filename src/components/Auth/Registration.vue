@@ -51,7 +51,12 @@
 				</v-card-text>
 				<v-card-actions>
 					<v-spacer></v-spacer>
-					<v-btn color="deep-purple accent-4 white--text" @click="onSubmit" :disabled="!valid">Create account</v-btn>
+					<v-btn
+						color="deep-purple accent-4 white--text"
+						@click="onSubmit"
+						:disabled="!valid || loading"
+						:loading="loading"
+					>Create account</v-btn>
 				</v-card-actions>
 				</v-card>
 			</v-col>
@@ -60,6 +65,7 @@
 </template>
 
 <script>
+
 export default {
 	data() {
 		return {
@@ -86,13 +92,23 @@ export default {
 			if (this.$refs.form.validate()) {
 				const user = {
 					email: this.email,
-					password: this.password
+					password: this.password,
+					returnSecureToken: true // Обзятельный параметр при работе с firebase api
 				}
 
-				console.log(user)
+				this.$store.dispatch('registerUser', user)
+					.then(() => {
+						this.$router.push('/')
+					})
+					.catch(err => console.log(err))
 			}
 		}
 	},
+	computed: {
+		loading() {
+			return this.$store.getters.loading
+		}
+	}
 }
 </script>
 

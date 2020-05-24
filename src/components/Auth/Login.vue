@@ -51,6 +51,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
 	data() {
 		return {
@@ -72,10 +74,19 @@ export default {
 			if (this.$refs.form.validate()) {
 				const user = {
 					email: this.email,
-					password: this.password
+					password: this.password,
+					returnSecureToken: true // Обзятельный параметр при работе с firebase api
 				}
 
-				console.log(user)
+				const url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAn3XUbkYJnYGj_-JQo2q2EO9gG5kVRZbU'
+
+				axios.post(url, user)
+				.then(function (response) {
+					console.log(response);
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
 			}
 		}
 	},
