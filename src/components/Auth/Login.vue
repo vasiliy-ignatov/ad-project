@@ -42,7 +42,12 @@
 				</v-card-text>
 				<v-card-actions>
 					<v-spacer></v-spacer>
-					<v-btn color="deep-purple accent-4 white--text" @click="onSubmit" :disabled="!valid">Login</v-btn>
+					<v-btn
+						color="deep-purple accent-4 white--text"
+						@click="onSubmit"
+						:disabled="!valid || loading"
+						:loading="loading"
+					>Login</v-btn>
 				</v-card-actions>
 				</v-card>
 			</v-col>
@@ -51,7 +56,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
 	data() {
@@ -78,18 +82,19 @@ export default {
 					returnSecureToken: true // Обзятельный параметр при работе с firebase api
 				}
 
-				const url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAn3XUbkYJnYGj_-JQo2q2EO9gG5kVRZbU'
-
-				axios.post(url, user)
-				.then(function (response) {
-					console.log(response);
-				})
-				.catch(function (error) {
-					console.log(error);
-				});
+				this.$store.dispatch('loginUser', user)
+					.then(() => {
+						this.$router.push('/')
+					})
+					.catch(err => console.log(err))
 			}
 		}
 	},
+	computed: {
+		loading() {
+			return this.$store.getters.loading
+		}
+	}
 }
 </script>
 
