@@ -96,7 +96,7 @@ export default {
 					returnSecureToken: true // Обзятельный параметр при работе с firebase api
 				}
 
-				this.$store.dispatch('registerUser', user)
+				this.$store.dispatch('auth', user)
 					.then(() => {
 						this.$router.push('/')
 					})

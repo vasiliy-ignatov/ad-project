@@ -10,5 +10,12 @@ new Vue({
 	router,
 	store,
 	vuetify,
-	render: h => h(App)
+	render: h => h(App),
+	created() {
+		const token = localStorage.getItem('user-token')
+		
+		if (token) {
+			this.$store.dispatch('autoLogin', token)
+		}
+	}
 })
