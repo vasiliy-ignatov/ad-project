@@ -28,7 +28,7 @@ export default {
 				console.log(response) // нужно добавить user.id в state
 			} catch(error) {
 				commit('setLoading', false)
-				commit('setError', error.message)
+				commit('setError', error.response.data.error.message)
 				throw error
 			}
 		},
@@ -44,7 +44,7 @@ export default {
 				console.log(response) // нужно добавить user.id в state
 			} catch(error) {
 				commit('setLoading', false)
-				commit('setError', error.message)
+				commit('setError', error.response.data.error.message)
 				throw error
 			}
 		}

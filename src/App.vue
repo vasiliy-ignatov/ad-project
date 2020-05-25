@@ -51,6 +51,19 @@
 		<v-content>
 			<router-view></router-view>
 		</v-content>
+
+		<v-snackbar
+			v-if="error"
+			:timeout="0"
+			color="red--text"
+			v-model="snackbar"
+		>
+			{{ error }}
+			<v-btn
+				text
+				@click="closeError"
+			>Close</v-btn>
+		</v-snackbar>
 	</v-app>
 </template>
 
@@ -67,6 +80,17 @@ export default {
 				{ title: 'New ad', icon: 'note_add', url: '/new' },
 				{ title: 'My ads', icon: 'list', url: '/list' }
 			],
+			snackbar: true
+		}
+	},
+	computed: {
+		error() {
+			return this.$store.getters.error
+		}
+	},
+	methods: {
+		closeError() {
+			return this.$store.dispatch('clearError')
 		}
 	}
 }
