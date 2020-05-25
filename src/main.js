@@ -17,5 +17,7 @@ new Vue({
 		if (token) {
 			this.$store.dispatch('autoLogin', token)
 		}
+
+		this.$store.dispatch('fetchAds')
 	}
 })

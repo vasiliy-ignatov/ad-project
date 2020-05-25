@@ -14,32 +14,14 @@ class Ad {
 export default {
 	state: {
 		ads: [
-			{
-				title: 'First',
-				description: 'First desc',
-				promo: false,
-				imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
-				id: '123'
-			},
-			{
-				title: 'Second',
-				description: 'Second desc',
-				promo: true,
-				imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
-				id: '1234'
-			},
-			{
-				title: 'Third',
-				description: 'Third desc',
-				promo: true,
-				imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
-				id: '12345'
-			}
 		]
 	},
 	mutations: {
 		createAd(state, payload) {
 			state.ads.push(payload)
+		},
+		loadAds(state, payload) {
+			state.ads = payload
 		}
 	},
 	actions: {
@@ -71,6 +53,31 @@ export default {
 				throw(error)
 			}
 			commit('createAd', payload)
+		},
+		async fetchAds({commit}) {
+			commit('clearError')
+			commit('setLoading', true)
+
+			const resultAds = [];
+
+			try {
+				const response = await axios.get('/ads.json')
+				const ads = response.data
+				
+				Object.keys(ads).forEach(key => {
+					const ad = ads[key]
+					resultAds.push(new Ad(
+						ad.title, ad.description, ad.ownerId, ad.imageSrc, ad.promo, key
+					))
+				})
+
+				commit('setLoading', false)
+				commit('loadAds', resultAds)
+			} catch(error) {
+				commit('setError', error.response.data.error.message)
+				commit('setLoading', false)
+				throw(error)
+			}
 		}
 	},
 	getters: {
