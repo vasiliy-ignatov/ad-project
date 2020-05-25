@@ -44,8 +44,9 @@
 				<div class="d-flex justify-end">
 					<v-btn
 						class="success white--text"
-						:disabled="!valid"
+						:disabled="!valid || loading"
 						@click="createAd"
+						:loading="loading"
 					>
 						Create ad
 					</v-btn>
@@ -76,7 +77,16 @@ export default {
 				}
 
 				this.$store.dispatch('createAd', ad)
+					.then(() => {
+						this.$router.push('/list')
+					})
+					.catch(() => {})
 			}
+		}
+	},
+	computed: {
+		loading() {
+			return this.$store.getters.loading
 		}
 	}
 }

@@ -1,3 +1,16 @@
+import axios from '../axios/axios-ad'
+
+class Ad {
+	constructor(title, description, ownerId, imageSrc = '', promo = false, id = null) {
+		this.title = title,
+		this.description = description,
+		this.ownerId = ownerId,
+		this.imageSrc = imageSrc,
+		this.promo = promo,
+		this.id = id
+	}
+}
+
 export default {
 	state: {
 		ads: [
@@ -30,9 +43,33 @@ export default {
 		}
 	},
 	actions: {
-		createAd({commit}, payload) {
+		async createAd({commit, getters}, payload) {
+			
 			payload.id = String(Math.floor(Math.random() * 100))
 
+			commit('clearError')
+			commit('setLoading', true)
+
+			try {
+				const newAd = new Ad(
+					payload.title,
+					payload.description,
+					getters.user,
+					payload.imageSrc,
+					payload.promo
+				)
+
+				const response = await axios.post('/ads.json', newAd)
+				commit('setLoading', false)
+				commit('createAd', {
+					...newAd,
+					id: response.data.name
+				})
+			} catch(error) {
+				commit('setError', error.response.data.error.message)
+				commit('setLoading', false)
+				throw(error)
+			}
 			commit('createAd', payload)
 		}
 	},
@@ -48,7 +85,6 @@ export default {
 		},
 		adById(state) {
 			return adId => {
-				console.log(adId)
 				return state.ads.find(ad => ad.id === adId)
 			}
 		}
