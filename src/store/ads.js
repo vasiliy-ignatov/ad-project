@@ -1,4 +1,3 @@
-import axios from 'axios'
 import * as firebase from 'firebase'
 
 
@@ -33,28 +32,25 @@ export default {
 			commit('setLoading', true)
 
 			const image = payload.image
-			const imageExt = image.name.slice(image.name.lastIndexOf('.'))
-
-			console.log(image, imageExt)
 
 			try {
+				await firebase.storage().ref(`ads/${image.name}`).put(image)
+				const imageSrc = await firebase.storage().ref(`ads/${image.name}`).getDownloadURL()
+
 				const newAd = new Ad(
 					payload.title,
 					payload.description,
-					getters.user,
-					'',
+					getters.user.id,
+					imageSrc,
 					payload.promo
 				)
 
-				const response = await axios.post('/ads.json', newAd)
-				const fileData = await axios.put(`/ads/${response.key}.${imageExt}`, image)
-				const imageSrc = fileData.metadata.downloadURLs[0]
-				console.log(imageSrc)
+				const ad = await firebase.database().ref('ads').push(newAd)
 
 				commit('setLoading', false)
 				commit('createAd', {
 					...newAd,
-					id: response.data.name,
+					id: ad.key,
 					imageSrc
 				})
 			} catch(error) {
@@ -62,7 +58,6 @@ export default {
 				commit('setLoading', false)
 				throw(error)
 			}
-			commit('createAd', payload)
 		},
 		async fetchAds({commit}) {
 			commit('clearError')
