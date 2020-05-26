@@ -78,12 +78,10 @@ export default {
 			if (this.$refs.form.validate()) {
 				const user = {
 					email: this.email,
-					password: this.password,
-					returnSecureToken: true, // Обзятельный параметр при работе с firebase api
-					isLogin: true
+					password: this.password
 				}
 
-				this.$store.dispatch('auth', user)
+				this.$store.dispatch('loginUser', user)
 					.then(() => {
 						this.$router.push('/')
 					})

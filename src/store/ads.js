@@ -1,4 +1,4 @@
-import axios from '../axios/axios-ad'
+import axios from 'axios'
 
 class Ad {
 	constructor(title, description, ownerId, imageSrc = '', promo = false, id = null) {
@@ -26,26 +26,34 @@ export default {
 	},
 	actions: {
 		async createAd({commit, getters}, payload) {
-			
-			payload.id = String(Math.floor(Math.random() * 100))
 
 			commit('clearError')
 			commit('setLoading', true)
+
+			const image = payload.image
+			const imageExt = image.name.slice(image.name.lastIndexOf('.'))
+
+			console.log(image, imageExt)
 
 			try {
 				const newAd = new Ad(
 					payload.title,
 					payload.description,
 					getters.user,
-					payload.imageSrc,
+					'',
 					payload.promo
 				)
 
 				const response = await axios.post('/ads.json', newAd)
+				const fileData = await axios.put(`/ads/${response.key}.${imageExt}`, image)
+				const imageSrc = fileData.metadata.downloadURLs[0]
+				console.log(imageSrc)
+
 				commit('setLoading', false)
 				commit('createAd', {
 					...newAd,
-					id: response.data.name
+					id: response.data.name,
+					imageSrc
 				})
 			} catch(error) {
 				commit('setError', error.response.data.error.message)

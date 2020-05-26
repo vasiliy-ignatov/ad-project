@@ -1,5 +1,10 @@
-import axios from 'axios'
+import * as firebase from 'firebase'
 
+class User {
+	constructor(id) {
+		this.id = id
+	}
+}
 export default {
 	state: {
 		user: null
@@ -10,36 +15,40 @@ export default {
 		},
 	},
 	actions: {
-		async auth ({commit}, payload) {
-			let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAn3XUbkYJnYGj_-JQo2q2EO9gG5kVRZbU'
+		async registerUser ({commit}, {email, password}) {
+			commit('clearError')
+			commit('setLoading', true)
+			
+			try {
+				const user = await firebase.auth().createUserWithEmailAndPassword(email, password)
 
-			if (payload.isLogin) {
-				url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAn3XUbkYJnYGj_-JQo2q2EO9gG5kVRZbU'
+				commit('setUser', new User(user.id))
+				commit('setLoading', false)
+			} catch(error) {
+				commit('setLoading', false)
+				commit('setError', error.message)
+				throw(error)
 			}
-
+		},
+		async loginUser({commit}, {email, password}) {
 			commit('clearError')
 			commit('setLoading', true)
 
 			try {
-				const response = await axios.post(url, payload)
+				const user = await firebase.auth().signInWithEmailAndPassword(email, password)
+				commit('setUser', new User(user.id))
 				commit('setLoading', false)
-				
-				const token = response.data.idToken
-				localStorage.setItem('user-token', token) // store the token in localstorage
-				commit('setUser', token)
-				console.log(response)
 			} catch(error) {
 				commit('setLoading', false)
-				commit('setError', error.response.data.error.message)
-				localStorage.removeItem('user-token')
-				throw error
+				commit('setError', error.message)
+				throw(error)
 			}
 		},
 		autoLogin({commit}, payload) {
-			commit('setUser', payload)
+			commit('setUser', new User(payload.uid))
 		},
 		logoutUser({commit}) {
-			localStorage.removeItem('token')
+			firebase.auth().signOut()
 			commit('setUser', null)
 		}
 	},

@@ -30,12 +30,20 @@
 
 				<v-btn
 					class="warning white--text mb-5"
+					@click="triggerUpload"
 				>
 					Upload
 					<v-icon right dark>mdi-cloud-upload</v-icon>
 				</v-btn>
+				<input
+					ref="fileInput"
+					type="file"
+					class="d-none"
+					accept="image/*"
+					@change="onFileChange"
+				>
 
-				<v-img src="https://picsum.photos/510/300?random" aspect-ratio="1.7"></v-img>
+				<v-img :src="imageSrc" v-if="imageSrc"></v-img>
 
 				<div>
 					<v-switch color="deep-purple accent-4" v-model="promo" label="Add to promo?"></v-switch>
@@ -44,7 +52,7 @@
 				<div class="d-flex justify-end">
 					<v-btn
 						class="success white--text"
-						:disabled="!valid || loading"
+						:disabled="!valid || !image || loading"
 						@click="createAd"
 						:loading="loading"
 					>
@@ -63,17 +71,19 @@ export default {
 			title: '',
 			description: '',
 			promo: true,
-			valid: false
+			valid: false,
+			image: null,
+			imageSrc: ''
 		}
 	},
 	methods: {
 		createAd() {
-			if (this.$refs.form.validate()) {
+			if (this.$refs.form.validate() && this.image) {
 				const ad = {
 					title: this.title,
 					description: this.description,
 					promo: this.promo,
-					imageSrc: 'https://picsum.photos/1700/1200?random'
+					image: this.image
 				}
 
 				this.$store.dispatch('createAd', ad)
@@ -82,6 +92,19 @@ export default {
 					})
 					.catch(() => {})
 			}
+		},
+		triggerUpload() {
+			this.$refs.fileInput.click()
+		},
+		onFileChange(event) {
+			const file = event.target.files[0]
+			const reader = new FileReader()
+
+			reader.onload = () => {
+				this.imageSrc = reader.result
+			}
+			reader.readAsDataURL(file)
+			this.image = file
 		}
 	},
 	computed: {
