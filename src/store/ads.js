@@ -1,4 +1,6 @@
 import axios from 'axios'
+import * as firebase from 'firebase'
+
 
 class Ad {
 	constructor(title, description, ownerId, imageSrc = '', promo = false, id = null) {
@@ -69,8 +71,8 @@ export default {
 			const resultAds = [];
 
 			try {
-				const response = await axios.get('/ads.json')
-				const ads = response.data
+				const data = await firebase.database().ref('ads').once('value')
+				const ads = data.val()
 				
 				Object.keys(ads).forEach(key => {
 					const ad = ads[key]

@@ -121,7 +121,10 @@ export default {
 		},
 		onLogout() {
 			this.$store.dispatch('logoutUser')
-			this.$router.push('/')
+			
+			if (this.$route.path !== '/') {
+				this.$router.push('/')
+			}
 		}
 	}
 }

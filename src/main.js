@@ -13,8 +13,6 @@ new Vue({
 	vuetify,
 	render: h => h(App),
 	created() {
-		// this.$store.dispatch('fetchAds')
-
 		// Your web app's Firebase configuration
 		var firebaseConfig = {
 			apiKey: "AIzaSyAn3XUbkYJnYGj_-JQo2q2EO9gG5kVRZbU",
@@ -34,5 +32,7 @@ new Vue({
 				this.$store.dispatch('autoLogin', user)
 			}
 		})
+
+		this.$store.dispatch('fetchAds')
 	}
 })
