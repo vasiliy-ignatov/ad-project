@@ -4,7 +4,9 @@ import vuetify from './plugins/vuetify' // path to vuetify export
 import router from './router'
 import store from './store'
 import * as firebase from 'firebase'
+import BuyModalComponent from '@/components/Shared/BuyModal'
 
+Vue.component('app-buy-modal', BuyModalComponent)
 
 new Vue({
 	el: '#app',

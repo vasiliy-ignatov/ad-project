@@ -13,7 +13,7 @@
 					</v-card-text>
 					<div class="d-flex justify-end pr-4 pb-4">
 						<app-edit :ad="ad" v-if="isOwner"></app-edit>
-						<v-btn class="success">Buy</v-btn>
+						<app-buy-modal :ad="ad"></app-buy-modal>
 					</div>
 				</v-card>
 				<div v-else class="text-center">
