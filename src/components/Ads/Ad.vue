@@ -6,13 +6,13 @@
 		>
 			<v-col cols="12" md="8">
 				<v-card v-if="!loading">
-					<v-img :src="ad.imageSrc" height="300px"></v-img>
+					<v-img :src="ad.imageSrc" height="350px"></v-img>
 					<v-card-text>
-						<h1 class="text--primary">{{ ad.title }}</h1>
+						<h1 class="text--primary mb-3">{{ ad.title }}</h1>
 						<p>{{ ad.description }}</p>
 					</v-card-text>
 					<div class="d-flex justify-end pr-4 pb-4">
-						<app-edit :ad="ad"></app-edit>
+						<app-edit :ad="ad" v-if="isOwner"></app-edit>
 						<v-btn class="success">Buy</v-btn>
 					</div>
 				</v-card>
@@ -40,6 +40,9 @@ export default {
 		},
 		loading() {
 			return this.$store.getters.loading
+		},
+		isOwner() {
+			return this.$store.getters.user ? this.ad.ownerId === this.$store.getters.user.id : null
 		}
 	},
 	components: {

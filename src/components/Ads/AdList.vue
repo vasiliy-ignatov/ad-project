@@ -3,6 +3,7 @@
 		<v-row
 			align="center"
 			justify="center"
+			v-if="!loading && myAds.length !== 0"
 		>
 			<v-col
 				cols="12"
@@ -39,6 +40,29 @@
 				</v-card>
 			</v-col>
 		</v-row>
+		<v-row
+			align="center"
+			justify="center"
+			v-else-if="!loading && myAds.length === 0"
+		>
+			<v-col
+				cols="12"
+				sm="10"
+				md="6"
+			>
+				<h1 class="text--secondary mb-3">You have no ads</h1>
+			</v-col>
+		</v-row>
+		<v-row v-else>
+			<v-col cols="12" class="text-center pt-5">
+					<v-progress-circular
+						:size="100"
+						:width="4"
+						color="purple"
+						indeterminate
+					></v-progress-circular>
+				</v-col>
+		</v-row>
 	</v-container>
 </template>
 
@@ -47,6 +71,9 @@ export default {
 	computed: {
 		myAds() {
 			return this.$store.getters.myAds
+		},
+		loading() {
+			return this.$store.getters.loading
 		}
 	}
 }
