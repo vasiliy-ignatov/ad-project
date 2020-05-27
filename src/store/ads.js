@@ -83,6 +83,9 @@ export default {
 				commit('setLoading', false)
 				throw(error)
 			}
+		},
+		async updatedAd() {
+
 		}
 	},
 	getters: {
