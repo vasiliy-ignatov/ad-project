@@ -4,7 +4,17 @@
 			align="center"
 			justify="center"
 		>
-			<v-col cols="12" sm=6>
+			<v-col cols="12" sm=6 v-if="loading" class="pt-5">
+				<div class="text-center">
+					<v-progress-circular
+						:size="100"
+						:width="4"
+						color="purple"
+						indeterminate
+					></v-progress-circular>
+				</div>
+			</v-col>
+			<v-col cols="12" sm=6 v-else-if="!loading && orders.length !== 0">
 				<h1 class="text--secondary mb-3">Orders</h1>
 
 				<v-list
@@ -48,29 +58,36 @@
 					</v-list-item-group>
 				</v-list>
 			</v-col>
+			<v-col cols="12" sm=6 v-else>
+				<div class="text-center">
+					<h1 class="text--secondary">You have no orders</h1>
+				</div>
+			</v-col>
 		</v-row>
 	</v-container>
 </template>
 
 <script>
 export default {
-	data() {
-		return {
-			orders: [
-				{
-					id: '1',
-					name: 'Viktor',
-					phone: '8-921-243-11-22',
-					adId: '123',
-					done: false
-				}
-			]
-		}
-	},
 	methods: {
 		markDone(order) {
-			order.done = true
+			this.$store.dispatch('markOrderDone', order.id)
+				.then(() => {
+					order.done = true
+				})
+				.catch(() => {}) 
 		}
+	},
+	computed: {
+		loading() {
+			return this.$store.getters.loading
+		},
+		orders() {
+			return this.$store.getters.orders
+		}
+	},
+	created() {
+		return this.$store.dispatch('fetchOrders')
 	}
 }
 </script>
